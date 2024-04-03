@@ -86,7 +86,7 @@ export class Game {
         this.#actualWord += letter;
     }
 
-    checkWordIsRight():void{
+    checkWordIsRight():void{    
         if (this.#actualWord == this.#pickedWord){
             location.assign("/winner");
         }

@@ -1,9 +1,8 @@
-import { Word } from "./Word.js";
-import { Game } from "./Game.js";
-const wordsCollection = new Word(["JUEGO", "TALAR", "BAILE", "ANDAR", "MONTE", "PLAYA", "PLATA", "ARBOL", "QUESO"]);
-const pickedWord = wordsCollection.getRandomWord();
+import { NewGame } from "./NewGame.js";
+const wordsCollection = ["JUEGO", "TALAR", "BAILE", "ANDAR", "MONTE", "PLAYA", "PLATA", "ARBOL", "QUESO"];
+const pickedWord = wordsCollection[Math.trunc(Math.random() * (wordsCollection.length + 1))];
 console.log(pickedWord);
-const game = new Game(pickedWord);
+const game = new NewGame(pickedWord);
 Array.from(document.getElementsByClassName("key")).forEach(element => element.addEventListener("click", (e) => {
     game.newKeyPressed(e.target.value);
 }));
