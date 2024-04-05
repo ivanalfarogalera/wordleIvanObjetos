@@ -1,3 +1,4 @@
+import { rightLetter, misplacedLetter } from "./env.js";
 export class UIChanger {
     setNewLetter(turn, position, letter) {
         Array.from(document.getElementById(`row_${turn}`).children)[position].textContent = letter;
@@ -7,9 +8,9 @@ export class UIChanger {
     }
     changeBackgroundPosition(turn, position, state) {
         let positionClass = "cell-grey";
-        if (state == "rightLetter")
+        if (state == rightLetter)
             positionClass = "cell-green";
-        if (state == "misplacedLetter")
+        if (state == misplacedLetter)
             positionClass = "cell-orange";
         Array.from(document.getElementById(`row_${turn}`).children)[position].classList.add(positionClass);
     }

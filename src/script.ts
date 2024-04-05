@@ -7,9 +7,11 @@ console.log(pickedWord);
 const game: NewGame = new NewGame(pickedWord);
 
 Array.from(document.getElementsByClassName("key")).forEach(element => element.addEventListener("click", (e)=>{
-    game.newKeyPressed((<HTMLButtonElement>e.target).value);
+    game.keyboard.getKey((<HTMLButtonElement>e.target).value)?.keyPressed;
+    //game.newKeyPressed((<HTMLButtonElement>e.target).value);
 }));
 
 document.addEventListener("keydown", (e)=>{
-    game.newKeyPressed(e.code);
+    game.keyboard.getKey(e.code)?.keyPressed;
+    //game.newKeyPressed(e.code);
 });

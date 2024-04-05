@@ -10,7 +10,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _NewGame_pickedWord, _NewGame_actualWord, _NewGame_turn, _NewGame_actualPosition, _NewGame_userInterface;
-import { MAX_WORD_SIZE, MAX_ATTEMPTS, validLetterCodes } from "./env.js";
+import { MAX_WORD_SIZE, MAX_ATTEMPTS, validLetterCodes, spanishLetterN, codeSpanishLetterN, rightLetter, misplacedLetter } from "./env.js";
 import { UIChanger } from "./UIChanger.js";
 export class NewGame {
     constructor(pickedWord) {
@@ -23,19 +23,17 @@ export class NewGame {
             let letterType = "";
             for (let i = 0; i < MAX_WORD_SIZE; i++) {
                 if (__classPrivateFieldGet(this, _NewGame_pickedWord, "f")[i] == __classPrivateFieldGet(this, _NewGame_actualWord, "f")[i]) {
-                    letterType = "rightLetter";
+                    letterType = rightLetter;
                 }
                 else {
                     let pattern = new RegExp(__classPrivateFieldGet(this, _NewGame_actualWord, "f")[i], "g");
                     let numberOfCoincidencesPickedWord = (__classPrivateFieldGet(this, _NewGame_pickedWord, "f").match(pattern) || []).length;
-                    if (numberOfCoincidencesPickedWord == 0) {
-                        letterType = "wrongLetter";
-                    }
-                    else {
-                        letterType = "misplacedLetter";
+                    if (numberOfCoincidencesPickedWord != 0) {
+                        letterType = misplacedLetter;
                     }
                 }
                 __classPrivateFieldGet(this, _NewGame_userInterface, "f").changeBackgroundPosition(__classPrivateFieldGet(this, _NewGame_turn, "f"), i, letterType);
+                letterType = "";
             }
         };
         __classPrivateFieldSet(this, _NewGame_pickedWord, pickedWord, "f");
@@ -100,6 +98,7 @@ export class NewGame {
     backspacePressed(code) {
         if (code == "Backspace" && __classPrivateFieldGet(this, _NewGame_actualPosition, "f") > 0) {
             __classPrivateFieldSet(this, _NewGame_actualPosition, __classPrivateFieldGet(this, _NewGame_actualPosition, "f") - 1, "f");
+            __classPrivateFieldSet(this, _NewGame_actualWord, __classPrivateFieldGet(this, _NewGame_actualWord, "f").substring(0, __classPrivateFieldGet(this, _NewGame_actualWord, "f").length - 1), "f");
             __classPrivateFieldGet(this, _NewGame_userInterface, "f").deleteLetter(__classPrivateFieldGet(this, _NewGame_turn, "f"), __classPrivateFieldGet(this, _NewGame_actualPosition, "f"));
         }
     }
@@ -107,8 +106,8 @@ export class NewGame {
         if (validLetterCodes.includes(code) && (__classPrivateFieldGet(this, _NewGame_actualPosition, "f") < MAX_WORD_SIZE)) {
             __classPrivateFieldGet(this, _NewGame_userInterface, "f").changeBackgroundKey(code);
             let letter = code.split("y")[1];
-            if (code == "Semicolon") {
-                letter = "Ñ";
+            if (code == codeSpanishLetterN) {
+                letter = spanishLetterN;
             }
             __classPrivateFieldGet(this, _NewGame_userInterface, "f").setNewLetter(this.turn, this.actualPosition, letter);
             __classPrivateFieldSet(this, _NewGame_actualPosition, __classPrivateFieldGet(this, _NewGame_actualPosition, "f") + 1, "f");
